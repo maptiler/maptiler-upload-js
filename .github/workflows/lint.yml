@@ -1,0 +1,34 @@
+name: Lint
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  NPM_MAPTILER_TOKEN: ${{ secrets.NPM_MAPTILER_TOKEN }}
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: [self-hosted, clancy]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22.4.1'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run code lint
+        run: yarn lint
+
+      - name: Disable Corepack
+        run: corepack disable

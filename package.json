@@ -1,0 +1,20 @@
+{
+  "name": "maptiler-upload-js",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "postinstall": "husky",
+    "prepack": "npm run build && pinst --disable",
+    "postpack": "pinst --enable",
+    "build": "yarn workspace @maptiler/upload-js run build",
+    "example": "yarn workspace example run dev",
+    "lint": "yarn workspaces foreach --all run lint:all",
+    "pre-commit": "yarn workspaces foreach --all run pre-commit"
+  },
+  "packageManager": "yarn@4.9.1",
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}
