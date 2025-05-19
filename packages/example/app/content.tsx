@@ -6,7 +6,7 @@ import { useCallback, useState } from 'react'
 import { UploadButton } from '@example/components/UploadButton'
 import { UploadTable } from '@example/components/UploadTable'
 import { UploadDialog } from 'src/components/UploadDialog'
-import type { Config, OutputType } from '@maptiler/upload-js'
+import type { ApiConfig, OutputType } from '@maptiler/upload-js'
 import type { ChangeEvent } from 'react'
 
 export const Content = () => {
@@ -22,7 +22,7 @@ export const Content = () => {
         setConfigs((prev) => prev.map((o) => (o.id === api.id ? api : o)))
       }
 
-      const config: Config = {
+      const config: ApiConfig = {
         file,
         outputType,
         onChange,
