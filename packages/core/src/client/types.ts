@@ -5,7 +5,7 @@ import type { HttpStatusCode } from 'axios'
 export type ChangeCallback = (api: UploadAPI) => void
 export type ErrorCallback = (code: HttpStatusCode, message: string) => void
 
-export type Config = {
+export type ApiConfig = {
   file: File
   outputType: OutputType | null
   initializeURI: string
@@ -42,11 +42,6 @@ export type InternalPart = {
   url: string
   start: number
   end: number
-}
-
-export type UploadedPart = {
-  index: number
-  etag: string
 }
 
 export type ApiError = {

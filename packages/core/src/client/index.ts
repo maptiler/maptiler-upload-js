@@ -4,7 +4,7 @@ import type { ProcessPayload } from '@upload/shared/types'
 import type { AxiosProgressEvent, AxiosResponse } from 'axios'
 import type {
   ChangeCallback,
-  Config,
+  ApiConfig,
   ErrorCallback,
   InitUploadResponse,
   InternalPart,
@@ -239,7 +239,7 @@ export class UploadAPI {
     this.onChange(this)
   }
 
-  static async initialize(config: Config): Promise<UploadAPI | null> {
+  static async initialize(config: ApiConfig): Promise<UploadAPI | null> {
     const {
       file,
       outputType,
