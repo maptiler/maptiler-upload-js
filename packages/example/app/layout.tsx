@@ -1,4 +1,4 @@
-import ThemeRegistry from '@example/components/ThemeRegistry/ThemeRegistry'
+import ThemeRegistry from '@example/components/ThemeRegistry'
 import type { ReactNode } from 'react'
 
 export const metadata = {
