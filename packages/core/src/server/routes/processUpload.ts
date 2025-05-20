@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { INGEST_SERVICE_URI } from '@upload/server/constants'
+import { DATASETS_SERVICE_URI } from '@upload/server/constants'
 import { fetchWithErrorHandling } from '@upload/server/helpers/fetchWithErrorHandling'
 import type { ProcessPayload } from '@upload/shared/types'
 
@@ -10,8 +10,8 @@ export const processUpload = async (
 ) => {
   return fetchWithErrorHandling(() => {
     return axios({
-      baseURL: INGEST_SERVICE_URI,
-      url: `/${id}/process`,
+      baseURL: DATASETS_SERVICE_URI,
+      url: `/ingest/${id}/process`,
       method: 'POST',
       headers: {
         Authorization: `Token ${serviceToken}`,
