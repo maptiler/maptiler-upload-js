@@ -4,7 +4,11 @@ import type { Props } from './types'
 
 export const Action = ({ uploadConfig }: Props) => {
   if (uploadConfig.getStatus() === Status.Added) {
-    return <Button onClick={() => uploadConfig.start()}>Start</Button>
+    return (
+      <Button onClick={() => uploadConfig.start()} size="sm">
+        Start
+      </Button>
+    )
   }
 
   if (uploadConfig.getStatus() === Status.Completed) {

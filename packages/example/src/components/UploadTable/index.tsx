@@ -3,7 +3,7 @@ import Table from '@mui/joy/Table'
 import { Row } from './Row'
 import type { Props } from './types'
 
-export const UploadTable = ({ uploadConfigs }: Props) => {
+export const UploadTable = ({ uploadAPIs }: Props) => {
   return (
     <Sheet
       sx={{
@@ -29,8 +29,8 @@ export const UploadTable = ({ uploadConfigs }: Props) => {
           </tr>
         </thead>
         <tbody>
-          {uploadConfigs.map((config) => (
-            <Row key={config.id} uploadConfig={config} />
+          {uploadAPIs.map((api) => (
+            <Row key={api.id} uploadAPI={api} />
           ))}
         </tbody>
       </Table>

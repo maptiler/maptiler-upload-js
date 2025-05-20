@@ -10,7 +10,7 @@ import type { ApiConfig, OutputType } from '@maptiler/upload-js'
 import type { ChangeEvent } from 'react'
 
 export const Content = () => {
-  const [configs, setConfigs] = useState<Array<UploadAPI>>([])
+  const [uploadAPIs, setUploadAPIs] = useState<Array<UploadAPI>>([])
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [files, setFiles] = useState<File[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -19,7 +19,7 @@ export const Content = () => {
     async (file: File, outputType: OutputType | null) => {
       // Callback which will be called on each update.
       const onChange = (api: UploadAPI) => {
-        setConfigs((prev) => prev.map((o) => (o.id === api.id ? api : o)))
+        setUploadAPIs((prev) => prev.map((o) => (o.id === api.id ? api : o)))
       }
 
       const config: ApiConfig = {
@@ -40,7 +40,7 @@ export const Content = () => {
       }
 
       // Insert a new file to the state.
-      setConfigs((prev) => prev.concat(api))
+      setUploadAPIs((prev) => prev.concat(api))
       setIsLoading(false)
     },
     [],
@@ -72,7 +72,7 @@ export const Content = () => {
       }}
     >
       <Box>
-        {configs.length > 0 && <UploadTable uploadConfigs={configs} />}
+        {uploadAPIs.length > 0 && <UploadTable uploadAPIs={uploadAPIs} />}
         <Sheet
           sx={{
             display: 'flex',
