@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { INGEST_SERVICE_URI } from '@upload/server/constants'
 import { fetchWithErrorHandling } from '@upload/server/helpers/fetchWithErrorHandling'
 import type { ProcessPayload } from '@upload/shared/types'
 
@@ -9,8 +10,8 @@ export const processUpload = async (
 ) => {
   return fetchWithErrorHandling(() => {
     return axios({
-      baseURL: 'https://service.maptiler.com/v1',
-      url: `/tiles/ingest/${id}/process`,
+      baseURL: INGEST_SERVICE_URI,
+      url: `/${id}/process`,
       method: 'POST',
       headers: {
         Authorization: `Token ${serviceToken}`,
