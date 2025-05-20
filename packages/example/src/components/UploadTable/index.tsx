@@ -18,7 +18,6 @@ export const UploadTable = ({ uploadAPIs }: Props) => {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Type</th>
             <th>Size</th>
             <th>Status</th>
             <th>Uploaded</th>

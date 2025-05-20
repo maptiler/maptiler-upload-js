@@ -10,7 +10,6 @@ export const Row = ({ uploadAPI }: Props) => {
   return (
     <tr key={uploadAPI.id}>
       <td>{uploadAPI.file.name}</td>
-      <td>{uploadAPI.file.type}</td>
       <td>{prettyBytes(uploadAPI.file.size)}</td>
       <td>{uploadAPI.getStatus()}</td>
       <td>{percentUploaded}%</td>
