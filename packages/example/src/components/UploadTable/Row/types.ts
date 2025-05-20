@@ -1,4 +1,4 @@
-import type { UploadAPI } from '@maptiler/upload-js/build/client'
+import type { UploadAPI } from '@maptiler/upload-js'
 
 export type Props = {
   uploadConfig: UploadAPI

@@ -1,4 +1,4 @@
-import { Status } from '@maptiler/upload-js/build/client/enums'
+import { Status } from '@maptiler/upload-js'
 import Button from '@mui/joy/Button'
 import type { Props } from './types'
 
