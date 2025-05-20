@@ -1,5 +1,6 @@
 import Box from '@mui/joy/Box'
 import Button from '@mui/joy/Button'
+import Input from '@mui/joy/Input'
 import Modal from '@mui/joy/Modal'
 import ModalClose from '@mui/joy/ModalClose'
 import Option from '@mui/joy/Option'
@@ -13,6 +14,7 @@ import type { Props } from './types'
 
 export const UploadDialog = ({ onConfirm, onClose }: Props) => {
   const [outputType, setOutputType] = useState<OutputType | null>(null)
+  const [datasetID, setDatasetID] = useState<string>('')
 
   const onTypeChange = (
     event: SyntheticEvent | null,
@@ -22,7 +24,7 @@ export const UploadDialog = ({ onConfirm, onClose }: Props) => {
   }
 
   const onSubmit = () => {
-    onConfirm(outputType)
+    onConfirm(outputType, datasetID.length ? datasetID : null)
   }
 
   return (
@@ -54,6 +56,7 @@ export const UploadDialog = ({ onConfirm, onClose }: Props) => {
           value={outputType}
           placeholder="Select type"
           size="sm"
+          sx={{ mb: 1 }}
         >
           <Option value="raster_tileset">Raster Tileset</Option>
           <Option value="raster_terrain">Raster Terrain</Option>
@@ -61,6 +64,13 @@ export const UploadDialog = ({ onConfirm, onClose }: Props) => {
           <Option value="vector_terrain">Vector Terrain</Option>
           <Option value="vector_tileset">Vector Tileset</Option>
         </Select>
+        <Typography textColor="text.tertiary" sx={{ fontSize: '12px', mb: 1 }}>
+          If you want to replace existing dataset, enter its ID.
+        </Typography>
+        <Input
+          onChange={(event) => setDatasetID(event.target.value)}
+          value={datasetID}
+        />
         <Box
           sx={{
             mt: 2,

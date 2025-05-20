@@ -16,7 +16,11 @@ export const Content = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const addFile = useCallback(
-    async (file: File, outputType: OutputType | null) => {
+    async (
+      file: File,
+      outputType: OutputType | null,
+      datasetID: string | null,
+    ) => {
       // Callback which will be called on each update.
       const onChange = (api: UploadAPI) => {
         setUploadAPIs((prev) => prev.map((o) => (o.id === api.id ? api : o)))
@@ -27,7 +31,9 @@ export const Content = () => {
         outputType,
         onChange,
         onError: (error, message) => alert(`${error}, ${message}`),
-        initializeURI: '/api/ingest',
+        initializeURI: datasetID
+          ? `/api/ingest/${datasetID}/replace`
+          : '/api/ingest',
         getProcessURI: (id) => `/api/ingest/${id}/process`,
         getCancelURI: (id) => `/api/ingest/${id}/cancel`,
       }
@@ -54,8 +60,11 @@ export const Content = () => {
     setIsOpen(true)
   }
 
-  const onConfirm = (outputType: OutputType | null) => {
-    files.forEach((file) => addFile(file, outputType))
+  const onConfirm = (
+    outputType: OutputType | null,
+    datasetID: string | null,
+  ) => {
+    files.forEach((file) => addFile(file, outputType, datasetID))
     setIsOpen(false)
     setIsLoading(true)
   }
