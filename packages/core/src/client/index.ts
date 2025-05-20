@@ -213,7 +213,7 @@ export class UploadAPI {
     // Elapsed time in milliseconds.
     const elapsedTime = event.timeStamp - this.startedAt
     // Number of bytes transferred per one millisecond.
-    const bitrate = loadedBytes / elapsedTime
+    const bitrate = elapsedTime > 0 ? loadedBytes / elapsedTime : 0
     // The remaining time to complete the transfer.
     const remainingTime = Math.max(this.file.size / bitrate - elapsedTime, 0)
 
