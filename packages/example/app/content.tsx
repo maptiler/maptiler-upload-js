@@ -31,9 +31,7 @@ export const Content = () => {
         outputType,
         onChange,
         onError: (error, message) => alert(`${error}, ${message}`),
-        initializeURI: datasetID
-          ? `/api/ingest/${datasetID}/replace`
-          : '/api/ingest',
+        initializeURI: datasetID ? `/api/${datasetID}/ingest` : '/api/ingest',
         getProcessURI: (id) => `/api/ingest/${id}/process`,
         getCancelURI: (id) => `/api/ingest/${id}/cancel`,
       }
