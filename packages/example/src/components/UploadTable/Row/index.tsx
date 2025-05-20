@@ -5,7 +5,9 @@ import type { Props } from './types'
 export const Row = ({ uploadAPI }: Props) => {
   const progress = uploadAPI.getProgress()
 
-  const percentUploaded = Math.floor((progress.uploaded / progress.total) * 100)
+  const percentUploaded = progress.uploaded
+    ? Math.floor((progress.uploaded / progress.total) * 100)
+    : 0
 
   const bitrate =
     progress.bitrate !== null ? `${prettyBytes(progress.bitrate)}/s` : 'N/A'
