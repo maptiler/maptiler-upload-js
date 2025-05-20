@@ -7,17 +7,18 @@ export const Row = ({ uploadAPI }: Props) => {
 
   const percentUploaded = Math.floor((progress.uploaded / progress.total) * 100)
 
-  const bitrate = progress.bitrate
-    ? `${prettyBytes(progress.bitrate)}/s`
-    : 'N/A'
+  const bitrate =
+    progress.bitrate !== null ? `${prettyBytes(progress.bitrate)}/s` : 'N/A'
 
-  const elapsedTime = progress.elapsedTime
-    ? `${Math.round(progress.elapsedTime / 1000)}s`
-    : 'N/A'
+  const elapsedTime =
+    progress.elapsedTime !== null
+      ? `${Math.round(progress.elapsedTime / 1000)}s`
+      : 'N/A'
 
-  const remainingTime = progress.remainingTime
-    ? `${Math.round(progress.remainingTime / 1000)}s`
-    : 'N/A'
+  const remainingTime =
+    progress.remainingTime !== null
+      ? `${Math.round(progress.remainingTime / 1000)}s`
+      : 'N/A'
 
   return (
     <tr key={uploadAPI.id}>
