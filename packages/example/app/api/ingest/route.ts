@@ -3,10 +3,12 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export async function POST(request: NextRequest) {
-  const serviceToken = process.env.SERVICE_TOKEN
+  const serviceToken = process.env.MAPTILER_SERVICE_TOKEN
 
   if (!serviceToken) {
-    throw new Error('❌ SERVICE_TOKEN environment variable is required!')
+    throw new Error(
+      '❌ MAPTILER_SERVICE_TOKEN environment variable is required!',
+    )
   }
 
   const { name, size, type } = await request.json()

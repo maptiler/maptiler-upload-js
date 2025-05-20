@@ -6,10 +6,12 @@ export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const serviceToken = process.env.SERVICE_TOKEN
+  const serviceToken = process.env.MAPTILER_SERVICE_TOKEN
 
   if (!serviceToken) {
-    throw new Error('❌ SERVICE_TOKEN environment variable is required!')
+    throw new Error(
+      '❌ MAPTILER_SERVICE_TOKEN environment variable is required!',
+    )
   }
 
   const { id } = await params

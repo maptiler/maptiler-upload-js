@@ -30,7 +30,7 @@ This repository contains a Next.js example showing how easily you can use this l
 ### 🔑 Prerequisites
 Create a .env file in the packages/example directory and add your MapTiler Cloud service token:
 ```
-SERVICE_TOKEN=<your-own-service-token>
+MAPTILER_SERVICE_TOKEN=<your-own-service-token>
 ```
 
 You can find your service token in your MapTiler Cloud account under Account → Credentials.
