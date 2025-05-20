@@ -9,7 +9,7 @@
     "prepack": "npm run build && pinst --disable",
     "postpack": "pinst --enable",
     "build": "yarn workspace @maptiler/upload-js run build",
-    "example": "yarn workspace example run dev",
+    "example": "yarn build && yarn workspace example run dev",
     "lint": "yarn workspaces foreach --all run lint:all",
     "pre-commit": "yarn workspaces foreach --all run pre-commit"
   },
