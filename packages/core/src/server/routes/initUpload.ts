@@ -3,7 +3,7 @@ import { fetchWithErrorHandling } from '@upload/server/helpers/fetchWithErrorHan
 import type { OutputType } from '@upload/shared/types'
 
 export const initUpload = async (
-  name: string,
+  filename: string,
   size: number,
   serviceToken: string,
   outputType: OutputType | null,
@@ -23,8 +23,8 @@ export const initUpload = async (
         Authorization: `Token ${serviceToken}`,
       },
       data: {
-        filename: name,
-        size: size,
+        filename,
+        size,
         supported_upload_types: ['s3_multipart'],
         output,
       },
