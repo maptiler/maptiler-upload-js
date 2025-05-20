@@ -13,9 +13,9 @@ export const Row = ({ uploadAPI }: Props) => {
       <td>{prettyBytes(uploadAPI.file.size)}</td>
       <td>{uploadAPI.getStatus()}</td>
       <td>{percentUploaded}%</td>
-      <td>{progress.bitrate.toFixed(3)}</td>
-      <td>{(progress.elapsedTime / 1000).toFixed(3)}</td>
-      <td>{(progress.remainingTime / 1000).toFixed(3)}</td>
+      <td>{prettyBytes(progress.bitrate)}/s</td>
+      <td>{Math.round(progress.elapsedTime / 1000)} s</td>
+      <td>{Math.round(progress.remainingTime / 1000)} s</td>
       <td>
         <Action uploadConfig={uploadAPI} />
       </td>
