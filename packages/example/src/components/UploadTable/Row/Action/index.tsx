@@ -2,16 +2,16 @@ import { Status } from '@maptiler/upload-js'
 import Button from '@mui/joy/Button'
 import type { Props } from './types'
 
-export const Action = ({ uploadConfig }: Props) => {
-  if (uploadConfig.getStatus() === Status.Added) {
+export const Action = ({ uploadAPI }: Props) => {
+  if (uploadAPI.getStatus() === Status.Added) {
     return (
-      <Button onClick={() => uploadConfig.start()} size="sm">
+      <Button onClick={() => uploadAPI.start()} size="sm">
         Start
       </Button>
     )
   }
 
-  if (uploadConfig.getStatus() === Status.Completed) {
+  if (uploadAPI.getStatus() === Status.Completed) {
     return 'Completed'
   }
 

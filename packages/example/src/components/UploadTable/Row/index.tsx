@@ -17,7 +17,7 @@ export const Row = ({ uploadAPI }: Props) => {
       <td>{Math.round(progress.elapsedTime / 1000)} s</td>
       <td>{Math.round(progress.remainingTime / 1000)} s</td>
       <td>
-        <Action uploadConfig={uploadAPI} />
+        <Action uploadAPI={uploadAPI} />
       </td>
     </tr>
   )
