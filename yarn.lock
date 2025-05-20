@@ -3832,7 +3832,6 @@ __metadata:
     "@types/react-dom": "npm:^19"
     "@typescript-eslint/eslint-plugin": "npm:^8.18.2"
     "@typescript-eslint/parser": "npm:^8.18.2"
-    axios: "npm:^1.8.4"
     eslint: "npm:^9.17.0"
     eslint-config-next: "npm:15.2.4"
     eslint-config-prettier: "npm:^9.1.0"
