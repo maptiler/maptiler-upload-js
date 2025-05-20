@@ -12,6 +12,7 @@ export const UploadTable = ({ uploadAPIs }: Props) => {
       }}
     >
       <Table
+        size="lg"
         aria-label="basic table"
         sx={{ '& tr > *:last-child': { textAlign: 'right' } }}
       >

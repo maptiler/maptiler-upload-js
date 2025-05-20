@@ -12,8 +12,8 @@ export const Action = ({ uploadConfig }: Props) => {
   }
 
   if (uploadConfig.getStatus() === Status.Completed) {
-    return <Button disabled>Completed</Button>
+    return 'Completed'
   }
 
-  return <Button loading />
+  return 'Loading...'
 }
