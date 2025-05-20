@@ -70,15 +70,15 @@ export class UploadAPI {
 
     this.progress = {
       // Bytes.
-      uploaded: 0,
-      // Bytes.
       total: this.file.size,
+      // Bytes.
+      uploaded: null,
       // Milliseconds.
-      elapsedTime: 0,
+      elapsedTime: null,
       // Bytes per one millisecond.
-      bitrate: 0,
+      bitrate: null,
       // Milliseconds.
-      remainingTime: 0,
+      remainingTime: null,
     }
   }
 
@@ -213,15 +213,18 @@ export class UploadAPI {
     // Elapsed time in milliseconds.
     const elapsedTime = event.timeStamp - this.startedAt
     // Number of bytes transferred per one millisecond.
-    const bitrate = elapsedTime > 0 ? loadedBytes / elapsedTime : 0
+    const bitrate = elapsedTime > 0 ? loadedBytes / elapsedTime : null
+
     // The remaining time to complete the transfer.
-    const remainingTime = Math.max(this.file.size / bitrate - elapsedTime, 0)
+    const remainingTime = bitrate
+      ? Math.max(this.file.size / bitrate - elapsedTime, 0)
+      : null
 
     this.progress = {
       // Bytes.
-      uploaded: loadedBytes,
-      // Bytes.
       total: this.file.size,
+      // Bytes.
+      uploaded: loadedBytes,
       // Milliseconds.
       elapsedTime: elapsedTime,
       // Bytes per one millisecond.

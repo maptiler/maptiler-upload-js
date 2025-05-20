@@ -30,11 +30,11 @@ export type Part = {
 }
 
 export type Progress = {
-  uploaded: number
   total: number
-  elapsedTime: number
-  bitrate: number
-  remainingTime: number
+  uploaded: number | null
+  elapsedTime: number | null
+  bitrate: number | null
+  remainingTime: number | null
 }
 
 export type InternalPart = {
