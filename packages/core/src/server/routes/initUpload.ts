@@ -6,13 +6,9 @@ export const initUpload = async (
   filename: string,
   size: number,
   serviceToken: string,
-  outputType: OutputType | null,
+  type: OutputType | null,
 ) => {
-  const output = outputType
-    ? {
-        type: 'vector_features',
-      }
-    : undefined
+  const output = type ? { type } : undefined
 
   return fetchWithErrorHandling(() => {
     return axios({
