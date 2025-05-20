@@ -209,7 +209,7 @@ export class UploadAPI {
 
   private onUploadProgress(event: ProgressEvent): void {
     if (!this.startedAt) {
-      // Set timestamp from the first progress event (in milliseconds).
+      // Set the timestamp from the first progress event (in milliseconds).
       this.startedAt = event.timeStamp
     }
 
