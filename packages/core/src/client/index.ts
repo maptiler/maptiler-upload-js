@@ -99,10 +99,7 @@ export class UploadAPI {
 
   async cancel(): Promise<void> {
     return UploadAPI.handleFetchError(async () => {
-      const response = await axios({
-        method: 'POST',
-        url: this.cancelURI,
-      })
+      const response = await axios.post(this.cancelURI)
 
       if (response.status !== 200) {
         UploadAPI.reportUnsuccessfulResponse(response, this.onError)
@@ -142,11 +139,7 @@ export class UploadAPI {
 
   private async process(payload: ProcessPayload[]): Promise<void> {
     return UploadAPI.handleFetchError(async () => {
-      const response = await axios({
-        method: 'POST',
-        url: this.processURI,
-        data: payload,
-      })
+      const response = await axios.post(this.processURI, payload)
 
       if (response.status !== 200) {
         UploadAPI.reportUnsuccessfulResponse(response, this.onError)
@@ -164,17 +157,18 @@ export class UploadAPI {
     attempt = 1,
   ): Promise<string | void> {
     return UploadAPI.handleFetchError(async () => {
-      const response = await axios({
-        method: 'PUT',
-        url: part.url,
-        headers: {
-          'Content-Type': '',
+      const response = await axios.put(
+        part.url,
+        UploadAPI.sliceFile(this.file, part.start, part.end + 1),
+        {
+          headers: {
+            'Content-Type': '',
+          },
+          onUploadProgress: (axiosProgressEvent: AxiosProgressEvent) => {
+            this.onUploadProgress(axiosProgressEvent.event)
+          },
         },
-        data: UploadAPI.sliceFile(this.file, part.start, part.end + 1),
-        onUploadProgress: (axiosProgressEvent: AxiosProgressEvent) => {
-          this.onUploadProgress(axiosProgressEvent.event)
-        },
-      })
+      )
 
       if (response.status !== 200) {
         if (attempt < 7) {
@@ -251,14 +245,10 @@ export class UploadAPI {
     } = config
 
     const maybeUploadAPI = await UploadAPI.handleFetchError(async () => {
-      const response = await axios<InitUploadResponse>({
-        method: 'POST',
-        url: initializeURI,
-        data: {
-          name: file.name,
-          size: file.size,
-          type: outputType,
-        },
+      const response = await axios.post<InitUploadResponse>(initializeURI, {
+        name: file.name,
+        size: file.size,
+        type: outputType,
       })
 
       if (response.status !== 200) {
