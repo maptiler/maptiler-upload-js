@@ -1,0 +1,44 @@
+name: Release NPM private package
+
+on:
+  release:
+    types: [ published ]
+
+env:
+  NPM_MAPTILER_TOKEN: ${{ secrets.NPM_MAPTILER_TOKEN }}
+
+jobs:
+  release:
+    name: Release new version
+    runs-on: [self-hosted, clancy]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '23.10'
+
+      - name: Configure MapTiler NPM registry
+        run: npm config set //npm.maptiler.dev/:_authToken "${{ secrets.NPM_MAPTILER_TOKEN }}"
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Prepare release
+        run: |
+          echo "version=$(./scripts/getLatestVersionFromTags.cjs)" >> $GITHUB_ENV
+
+      - name: Update version
+        run: npm --no-git-tag-version version ${{ env.version }}
+
+      - name: Publish package to MapTiler NPM
+        run: yarn workspace @maptiler/upload-js npm publish
+
+      - name: Disable Corepack
+        run: corepack disable
