@@ -6,8 +6,8 @@
   "types": "build/index.d.ts",
   "repository": "https://github.com/maptiler/maptiler-upload-js.git",
   "publishConfig": {
-    "access": "restricted",
-    "registry": "https://npm.maptiler.dev/"
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "files": [
     "build/**/*"
