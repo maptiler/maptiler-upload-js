@@ -31,7 +31,7 @@ jobs:
           echo "version=$(./scripts/getLatestVersionFromTags.cjs)" >> $GITHUB_ENV
 
       - name: Update version
-        run: npm --no-git-tag-version version ${{ env.version }}
+        run: yarn workspace @maptiler/upload-js version ${{ env.version }}
 
       - name: Publish package to NPM
         run: yarn workspace @maptiler/upload-js npm publish
