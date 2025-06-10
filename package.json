@@ -5,9 +5,6 @@
     "packages/*"
   ],
   "scripts": {
-    "postinstall": "husky",
-    "prepack": "npm run build && pinst --disable",
-    "postpack": "pinst --enable",
     "build": "yarn workspace @maptiler/upload-js run build",
     "example": "yarn build && yarn workspace example run dev",
     "lint": "yarn workspaces foreach --all run lint:all",

@@ -1,11 +1,8 @@
-name: Release NPM private package
+name: Release NPM package
 
 on:
   release:
     types: [ published ]
-
-env:
-  NPM_MAPTILER_TOKEN: ${{ secrets.NPM_MAPTILER_TOKEN }}
 
 jobs:
   release:
@@ -20,9 +17,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '23.10'
-
-      - name: Configure MapTiler NPM registry
-        run: npm config set //npm.maptiler.dev/:_authToken "${{ secrets.NPM_MAPTILER_TOKEN }}"
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@maptiler'
 
       - name: Enable Corepack
         run: corepack enable
@@ -37,8 +33,10 @@ jobs:
       - name: Update version
         run: npm --no-git-tag-version version ${{ env.version }}
 
-      - name: Publish package to MapTiler NPM
+      - name: Publish package to NPM
         run: yarn workspace @maptiler/upload-js npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
 
       - name: Disable Corepack
         run: corepack disable

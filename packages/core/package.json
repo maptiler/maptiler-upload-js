@@ -1,19 +1,22 @@
 {
   "name": "@maptiler/upload-js",
-  "version": "0.0.0",
+  "version": "1.0.0-rc.1",
   "author": "MapTiler Team",
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "license": "BSD-3-Clause",
   "repository": "https://github.com/maptiler/maptiler-upload-js.git",
   "publishConfig": {
-    "access": "restricted",
-    "registry": "https://npm.maptiler.dev/"
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "files": [
     "build/**/*"
   ],
   "scripts": {
-    "build": "rm -rf build && tsc && tsc-alias",
+    "prepack": "npm run build",
+    "build": "rm -rf build && tsc && tsc-alias && npm run build:copy",
+    "build:copy": "node scripts/copyFiles.cjs",
     "lint:prettier": "prettier --write src",
     "lint:eslint": "eslint --fix src --max-warnings=0",
     "lint:ts": "tsc --noEmit",
