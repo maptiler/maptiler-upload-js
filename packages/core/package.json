@@ -4,6 +4,7 @@
   "author": "MapTiler Team",
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "license": "BSD-3-Clause",
   "repository": "https://github.com/maptiler/maptiler-upload-js.git",
   "publishConfig": {
     "access": "public",
