@@ -26,12 +26,10 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Prepare release
+      - name: Prepare package version
         run: |
-          echo "version=$(./scripts/getLatestVersionFromTags.cjs)" >> $GITHUB_ENV
-
-      - name: Update version
-        run: yarn workspace @maptiler/upload-js version ${{ env.version }}
+         ./scripts/getLatestVersionFromTags.cjs packages/core
+         cat packages/core/package.json | grep version
 
       - name: Publish package to NPM
         run: yarn workspace @maptiler/upload-js npm publish
