@@ -1,6 +1,6 @@
 {
   "name": "@maptiler/upload-js",
-  "version": "1.0.0-rc.1",
+  "version": "0.0.0",
   "author": "MapTiler Team",
   "main": "build/index.js",
   "types": "build/index.d.ts",
