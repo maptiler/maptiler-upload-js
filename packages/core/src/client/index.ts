@@ -82,14 +82,25 @@ export class UploadAPI {
     }
   }
 
+  /**
+   * Returns the current upload status.
+   * @returns The current upload status
+   */
   getStatus(): Status {
     return this.status
   }
 
+  /**
+   * Returns the current upload progress metrics.
+   * @returns The current upload progress metrics.
+   */
   getProgress(): Progress {
     return this.progress
   }
 
+  /**
+   * Starts the file upload. Triggers the `onChange` callback.
+   */
   start(): void {
     this.status = Status.Uploading
     this.onChange(this)
@@ -97,6 +108,9 @@ export class UploadAPI {
     void this.upload()
   }
 
+  /**
+   * Cancels the upload by making a cancellation request to the backend. Triggers the `onChange` callback.
+   */
   async cancel(): Promise<void> {
     return UploadAPI.handleFetchError(async () => {
       const response = await axios.post(this.cancelURI)
