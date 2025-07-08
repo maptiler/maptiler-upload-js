@@ -22,6 +22,7 @@ export class UploadAPI {
   private readonly onChange: ChangeCallback
   private readonly onError: ErrorCallback
   private readonly parts: InternalPart[]
+  private readonly autoUpload: boolean
 
   private status: Status
   private uploaded: number
@@ -38,6 +39,8 @@ export class UploadAPI {
 
     this.processURI = config.processURI
     this.cancelURI = config.cancelURI
+
+    this.autoUpload = config.autoUpload
 
     this.onChange = onChange
     this.onError = onError
@@ -79,6 +82,10 @@ export class UploadAPI {
       bitrate: null,
       // Milliseconds.
       remainingTime: null,
+    }
+
+    if (this.autoUpload) {
+      this.start()
     }
   }
 
@@ -254,6 +261,7 @@ export class UploadAPI {
       getCancelURI,
       onChange,
       onError,
+      autoUpload,
     } = config
 
     const maybeUploadAPI = await UploadAPI.handleFetchError(async () => {
@@ -269,7 +277,8 @@ export class UploadAPI {
         return null
       }
 
-      const uploadConfig = {
+      const uploadConfig: UploadConfig = {
+        autoUpload: autoUpload ?? true,
         id: response.data.id,
         file,
         partSize: response.data.upload.part_size,

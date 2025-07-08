@@ -13,6 +13,7 @@ export type ApiConfig = {
   getCancelURI: (uploadID: string) => string
   onChange: ChangeCallback
   onError: ErrorCallback
+  autoUpload?: boolean
 }
 
 export type UploadConfig = {
@@ -22,6 +23,7 @@ export type UploadConfig = {
   parts: Part[]
   processURI: string
   cancelURI: string
+  autoUpload: boolean
 }
 
 export type Part = {
