@@ -1,26 +1,27 @@
+<p align="center">
+<a href="https://docs.maptiler.com/upload-js/">official page →</a><br>
+  <img src="images/maptiler-logo.svg" width="350px">
+</p>
+
+<p align="center" style="color: #AAA">
+  A TypeScript & Javascript library for handling large file uploads with multipart support and progress tracking. The Upload JS provides a simple way to upload files to MapTiler, track progress, and handle errors.
+</p>
+
+<p align="center">
+  <img src="images/JS-logo.svg" width="20px">
+  <img src="images/TS-logo.svg" width="20px">
+  <img src="https://img.shields.io/twitter/follow/maptiler?style=social"></img>
+</p>
+
 # Upload API Library
-A TypeScript library for handling large file uploads with multipart support and progress tracking.
 
-## ✨ Features
-- Multipart file upload support.
-- Progress tracking with detailed statistics.
-- Error handling and status reporting.
-- React integration.
-- TypeScript type safety.
-- Customizable upload endpoints.
-- Support for different output types.
-- Cancel upload functionality.
+A TypeScript & Javascript library for handling large file uploads with multipart support and progress tracking. The Upload JS provides a simple way to upload files to MapTiler, track progress, and handle errors.
 
-### 📈 Progress Tracking
-The library provides detailed progress information including:
-- Uploaded bytes
-- Total file size
-- Elapsed time
-- Bitrate
-- Estimated remaining time
+Please refer to the [Official Upload JS Library Documentation](https://docs.maptiler.com/upload-js/) for all its features, use cases, API reference, and more.
 
 ## Using `UploadAPI`
-The UploadAPI class provides a simple way to upload files to MapTiler, track progress, and handle errors.
+
+The `UploadAPI` class provides a simple way to upload files to MapTiler, track progress, and handle errors.
 You can use it in any JavaScript or TypeScript project.
 
 ### Installation
@@ -48,8 +49,10 @@ All functions require `serviceToken` – the MapTiler service token is a private
 application with MapTiler services. This token grants access to your MapTiler account and allows your server to
 perform actions such as uploading files, managing datasets, and more.
 
+> [!CAUTION]
 > 🚨 **The service token must never be exposed to the client/browser.** It should only be used on the server.
 
+> [!TIP]
 > See `packages/example/app/api` how easily the functions can be integrated into your ecosystem.
 
 ### Client-side
@@ -81,55 +84,8 @@ api.cancel()
 ```
 
 ## `UploadAPI` Public Methods
-### `getStatus(): Status`
-Returns the current upload status.
 
-### `getProgress(): Progress`
-Returns the current upload progress metrics.
-
-### `start(): void`
-Starts the file upload. Triggers the `onChange` callback.
-
-### `cancel(): Promise<void>`
-Cancels the upload by making a cancellation request to the backend. Triggers the `onChange` callback.
-
-## `UploadAPI` Types
-### `Status`
-```ts
-enum Status {
-  Added = 'Added',
-  Uploading = 'Uploading',
-  Completed = 'Completed',
-  Canceled = 'Canceled'
-}
-```
-
-### `Progress`
-```ts
-type Progress = {
-  // Total file size (bytes).
-  total: number
-  // Already uploaded (bytes).
-  uploaded: number | null
-  // Elapsed time (milliseconds).
-  elapsedTime: number | null
-  // Bytes per one millisecond.
-  bitrate: number | null
-  // Remaining time (milliseconds).
-  remainingTime: number | null
-}
-```
-
-### `OutputType`
-Force output type (if not set, then output type is tileset determined based on input file).
-```ts
-type OutputType =
-  | 'raster_tileset'
-  | 'raster_terrain'
-  | 'vector_features'
-  | 'vector_terrain'
-  | 'vector_tileset'
-```
+The [API reference](https://docs.maptiler.com/upload-js/api/) documents every object, classes, types and method available in the MapTiler Upload JS.
 
 ## 🧪 Example
 This repository contains a Next.js example showing how easily you can use this library.
