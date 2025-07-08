@@ -100,7 +100,8 @@ enum Status {
   Added = 'Added',
   Uploading = 'Uploading',
   Completed = 'Completed',
-  Canceled = 'Canceled'
+  Canceled = 'Canceled',
+  Failed = 'Failed',
 }
 ```
 

@@ -104,6 +104,9 @@ export class UploadAPI {
       if (response.status !== 200) {
         UploadAPI.reportUnsuccessfulResponse(response, this.onError)
 
+        this.status = Status.Failed
+        this.onChange(this)
+
         return
       }
 
@@ -143,6 +146,9 @@ export class UploadAPI {
 
       if (response.status !== 200) {
         UploadAPI.reportUnsuccessfulResponse(response, this.onError)
+
+        this.status = Status.Failed
+        this.onChange(this)
 
         return
       }
@@ -184,6 +190,9 @@ export class UploadAPI {
 
         // Report a problem after all attempts.
         UploadAPI.reportUnsuccessfulResponse(response, this.onError)
+
+        this.status = Status.Failed
+        this.onChange(this)
 
         return
       }

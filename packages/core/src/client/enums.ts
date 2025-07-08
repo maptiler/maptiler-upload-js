@@ -3,4 +3,5 @@ export enum Status {
   Uploading = 'Uploading',
   Completed = 'Completed',
   Canceled = 'Canceled',
+  Failed = 'Failed',
 }
