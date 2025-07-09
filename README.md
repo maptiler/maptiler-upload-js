@@ -54,7 +54,9 @@ perform actions such as uploading files, managing datasets, and more.
 
 ### Client-side
 ```ts
+import { HttpStatusCode } from 'axios'
 import { ApiConfig, OutputType, UploadAPI } from '@maptiler/upload-js'
+
 
 // The UploadAPI class is a wrapper around the upload process.
 const api = await UploadAPI.initialize({
@@ -65,7 +67,9 @@ const api = await UploadAPI.initialize({
     // api.getProgress()
     // api.getStatus())
   },
-  onError: (error, message) => alert(`${error}, ${message}`),
+  onError: (error: HttpStatusCode, message: string, api: UploadAPI | null) => {
+    alert(`${error}, ${message}`)
+  },
   // These API endpoints must point to your backend, which can use the provided server-side helpers to
   // proxy requests to  MapTiler.
   initializeURI: datasetID ? `/api/${datasetID}/ingest` : '/api/ingest',

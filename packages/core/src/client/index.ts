@@ -105,11 +105,11 @@ export class UploadAPI {
   }
 
   async cancel(): Promise<void> {
-    return UploadAPI.handleFetchError(async () => {
+    return this.handleFetchError(async () => {
       const response = await axios.post(this.cancelURI)
 
       if (response.status !== 200) {
-        UploadAPI.reportUnsuccessfulResponse(response, this.onError)
+        this.reportUnsuccessfulResponse(response)
 
         this.status = Status.Failed
         this.onChange(this)
@@ -119,7 +119,7 @@ export class UploadAPI {
 
       this.status = Status.Canceled
       this.onChange(this)
-    }, this.onError)
+    })
   }
 
   private async upload(): Promise<void> {
@@ -148,11 +148,11 @@ export class UploadAPI {
   }
 
   private async process(payload: ProcessPayload[]): Promise<void> {
-    return UploadAPI.handleFetchError(async () => {
+    return this.handleFetchError(async () => {
       const response = await axios.post(this.processURI, payload)
 
       if (response.status !== 200) {
-        UploadAPI.reportUnsuccessfulResponse(response, this.onError)
+        this.reportUnsuccessfulResponse(response)
 
         this.status = Status.Failed
         this.onChange(this)
@@ -162,14 +162,14 @@ export class UploadAPI {
 
       this.status = Status.Completed
       this.onChange(this)
-    }, this.onError)
+    })
   }
 
   private async uploadPart(
     part: InternalPart,
     attempt = 1,
   ): Promise<string | void> {
-    return UploadAPI.handleFetchError(async () => {
+    return this.handleFetchError(async () => {
       const response = await axios.put(
         part.url,
         UploadAPI.sliceFile(this.file, part.start, part.end + 1),
@@ -196,7 +196,7 @@ export class UploadAPI {
         }
 
         // Report a problem after all attempts.
-        UploadAPI.reportUnsuccessfulResponse(response, this.onError)
+        this.reportUnsuccessfulResponse(response)
 
         this.status = Status.Failed
         this.onChange(this)
@@ -214,7 +214,7 @@ export class UploadAPI {
       this.uploaded += part.end - part.start
 
       return parsedETag
-    }, this.onError)
+    })
   }
 
   private onUploadProgress(event: ProgressEvent): void {
@@ -252,6 +252,18 @@ export class UploadAPI {
     this.onChange(this)
   }
 
+  private reportUnsuccessfulResponse(response: AxiosResponse): void {
+    this.onError(response.status, response.statusText, this)
+  }
+
+  private async handleFetchError<T>(fn: () => Promise<T>): Promise<T | void> {
+    try {
+      return await fn()
+    } catch (error: unknown) {
+      UploadAPI.reportError(error, this.onError, this)
+    }
+  }
+
   static async initialize(config: ApiConfig): Promise<UploadAPI | null> {
     const {
       file,
@@ -264,36 +276,40 @@ export class UploadAPI {
       autoUpload,
     } = config
 
-    const maybeUploadAPI = await UploadAPI.handleFetchError(async () => {
-      const response = await axios.post<InitUploadResponse>(initializeURI, {
+    let response: AxiosResponse<InitUploadResponse> | null = null
+
+    try {
+      response = await axios.post<InitUploadResponse>(initializeURI, {
         name: file.name,
         size: file.size,
         type: outputType,
       })
+    } catch (error: unknown) {
+      UploadAPI.reportError(error, onError, null)
 
-      if (response.status !== 200) {
-        UploadAPI.reportUnsuccessfulResponse(response, onError)
+      return null
+    }
 
-        return null
-      }
+    if (response.status !== 200) {
+      onError(response.status, response.statusText, null)
 
-      const uploadConfig: UploadConfig = {
-        autoUpload: autoUpload ?? true,
-        id: response.data.id,
-        file,
-        partSize: response.data.upload.part_size,
-        parts: response.data.upload.parts.map((o) => ({
-          id: o.part_id,
-          url: o.url,
-        })),
-        processURI: getProcessURI(response.data.id),
-        cancelURI: getCancelURI(response.data.id),
-      }
+      return null
+    }
 
-      return new UploadAPI(uploadConfig, onChange, onError)
-    }, onError)
+    const uploadConfig: UploadConfig = {
+      autoUpload: autoUpload ?? true,
+      id: response.data.id,
+      file,
+      partSize: response.data.upload.part_size,
+      parts: response.data.upload.parts.map((o) => ({
+        id: o.part_id,
+        url: o.url,
+      })),
+      processURI: getProcessURI(response.data.id),
+      cancelURI: getCancelURI(response.data.id),
+    }
 
-    return maybeUploadAPI ?? null
+    return new UploadAPI(uploadConfig, onChange, onError)
   }
 
   private static sliceFile(file: File, start: number, end: number): Blob {
@@ -304,33 +320,23 @@ export class UploadAPI {
     return file.slice(start, end)
   }
 
-  private static async handleFetchError<T>(
-    fn: () => Promise<T>,
+  private static reportError(
+    error: unknown,
     onError: ErrorCallback,
-  ): Promise<T | void> {
-    try {
-      return await fn()
-    } catch (error: unknown) {
-      UploadAPI.reportError(error, onError)
-    }
-  }
-
-  private static reportUnsuccessfulResponse(
-    response: AxiosResponse,
-    onError: ErrorCallback,
+    api: UploadAPI | null,
   ): void {
-    onError(response.status, response.statusText)
-  }
-
-  private static reportError(error: unknown, onError: ErrorCallback): void {
     if (isAxiosError(error)) {
-      onError(error.status ?? HttpStatusCode.InternalServerError, error.message)
+      onError(
+        error.status ?? HttpStatusCode.InternalServerError,
+        error.message,
+        api,
+      )
     } else if (typeof error === 'string') {
-      onError(HttpStatusCode.InternalServerError, error)
+      onError(HttpStatusCode.InternalServerError, error, api)
     } else if (error instanceof Error) {
-      onError(HttpStatusCode.InternalServerError, error.message)
+      onError(HttpStatusCode.InternalServerError, error.message, api)
     } else {
-      onError(HttpStatusCode.InternalServerError, 'Unknown error')
+      onError(HttpStatusCode.InternalServerError, 'Unknown error', api)
     }
   }
 }
