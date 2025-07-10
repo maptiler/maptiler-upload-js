@@ -3,7 +3,11 @@ import type { OutputType } from '@upload/shared/types'
 import type { HttpStatusCode } from 'axios'
 
 export type ChangeCallback = (api: UploadAPI) => void
-export type ErrorCallback = (code: HttpStatusCode, message: string) => void
+export type ErrorCallback = (
+  code: HttpStatusCode,
+  message: string,
+  api: UploadAPI | null,
+) => void
 
 export type ApiConfig = {
   file: File
@@ -13,6 +17,7 @@ export type ApiConfig = {
   getCancelURI: (uploadID: string) => string
   onChange: ChangeCallback
   onError: ErrorCallback
+  autoUpload?: boolean
 }
 
 export type UploadConfig = {
@@ -22,6 +27,7 @@ export type UploadConfig = {
   parts: Part[]
   processURI: string
   cancelURI: string
+  autoUpload: boolean
 }
 
 export type Part = {
