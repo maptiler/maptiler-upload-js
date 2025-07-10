@@ -10,7 +10,7 @@ env:
 jobs:
   lint:
     name: Lint
-    runs-on: [self-hosted, clancy]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
