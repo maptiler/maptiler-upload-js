@@ -273,7 +273,7 @@ export class UploadAPI {
       getCancelURI,
       onChange,
       onError,
-      autoUpload,
+      autoUpload = true,
     } = config
 
     let response: AxiosResponse<InitUploadResponse> | null = null
@@ -297,9 +297,9 @@ export class UploadAPI {
     }
 
     const uploadConfig: UploadConfig = {
-      autoUpload: autoUpload ?? true,
-      id: response.data.id,
+      autoUpload,
       file,
+      id: response.data.id,
       partSize: response.data.upload.part_size,
       parts: response.data.upload.parts.map((o) => ({
         id: o.part_id,
