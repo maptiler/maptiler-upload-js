@@ -34,7 +34,7 @@ jobs:
       - name: Publish package to NPM
         run: yarn workspace @maptiler/upload-js npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Disable Corepack
         run: corepack disable
