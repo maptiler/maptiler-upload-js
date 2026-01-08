@@ -23,7 +23,6 @@ A TypeScript & Javascript library for handling large file uploads with multipart
 <li><a href="#-support">Support</a></li>
 <li><a href="#-contributing">Contributing</a></li>
 <li><a href="#-license">License</a></li>
-<li><a href="#-acknowledgements">Acknowledgements</a></li>
 </ul>
 </details>
 
