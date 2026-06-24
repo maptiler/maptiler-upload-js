@@ -20,9 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '23.10'
-          registry-url: 'https://registry.npmjs.org'
-          scope: '@maptiler'
+          node-version: '24'
 
       - name: Enable Corepack
         run: corepack enable
@@ -32,11 +30,17 @@ jobs:
 
       - name: Prepare package version
         run: |
-         ./scripts/setPackageVersion.cjs packages/core
-         cat packages/core/package.json | grep version
+          ./scripts/setPackageVersion.cjs packages/core
+          cat packages/core/package.json | grep version
 
       - name: Publish package to NPM
-        run: yarn workspace @maptiler/upload-js npm publish
+        run: |
+          cd packages/core
+          if [ "${{ github.event.release.prerelease }}" = "true" ]; then
+            npm publish --access public --tag next
+          else
+            npm publish --access public
+          fi
 
       - name: Disable Corepack
         run: corepack disable
