@@ -5,7 +5,10 @@
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "license": "BSD-3-Clause",
-  "repository": "https://github.com/maptiler/maptiler-upload-js.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maptiler/maptiler-upload-js.git"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
