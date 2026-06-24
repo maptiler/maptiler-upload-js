@@ -32,11 +32,13 @@ jobs:
 
       - name: Prepare package version
         run: |
-         ./scripts/setPackageVersion.cjs packages/core
-         cat packages/core/package.json | grep version
+          ./scripts/setPackageVersion.cjs packages/core
+          cat packages/core/package.json | grep version
 
       - name: Publish package to NPM
-        run: yarn workspace @maptiler/upload-js npm publish
+        run: |
+          cd packages/core
+          npm publish --access public
 
       - name: Disable Corepack
         run: corepack disable
