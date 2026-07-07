@@ -33,6 +33,10 @@ jobs:
           ./scripts/setPackageVersion.cjs packages/core
           cat packages/core/package.json | grep version
 
+      - name: Copy files
+        run: |
+          ./scripts/copyFiles.cjs
+
       - name: Publish package to NPM
         run: |
           cd packages/core
