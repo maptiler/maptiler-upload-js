@@ -9,3 +9,5 @@ export type OutputType =
   | 'vector_features'
   | 'vector_terrain'
   | 'vector_tileset'
+  | 'image'
+  | 'splats'

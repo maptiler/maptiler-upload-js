@@ -63,6 +63,8 @@ export const UploadDialog = ({ onConfirm, onClose }: Props) => {
           <Option value="vector_features">Vector Features</Option>
           <Option value="vector_terrain">Vector Terrain</Option>
           <Option value="vector_tileset">Vector Tileset</Option>
+          <Option value="image">Image</Option>
+          <Option value="splats">Splat model</Option>
         </Select>
         <Typography textColor="text.tertiary" sx={{ fontSize: '12px', mb: 1 }}>
           If you want to replace existing dataset, enter its ID.
