@@ -18,8 +18,7 @@
   ],
   "scripts": {
     "prepack": "npm run build",
-    "build": "rm -rf build && tsc && tsc-alias && npm run build:copy",
-    "build:copy": "node scripts/copyFiles.cjs",
+    "build": "rm -rf build && tsc && tsc-alias",
     "lint:prettier": "prettier --write src",
     "lint:eslint": "eslint --fix src --max-warnings=0",
     "lint:ts": "tsc --noEmit",

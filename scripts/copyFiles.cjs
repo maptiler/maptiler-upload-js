@@ -3,7 +3,7 @@
 const fs = require('fs')
 const { join } = require('path')
 
-const parentDirectory = join(__dirname, '../../../')
+const parentDirectory = join(__dirname, '../')
 
 fs.copyFileSync(
   join(parentDirectory, 'README.md'),

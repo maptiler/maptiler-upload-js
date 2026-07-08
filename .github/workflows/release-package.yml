@@ -1,12 +1,12 @@
 name: Release NPM package
 
 permissions:
-  id-token: write  # Required for NPM trusted publishing
+  id-token: write # Required for NPM trusted publishing
   contents: read
 
 on:
   release:
-    types: [ published ]
+    types: [published]
 
 jobs:
   release:
@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '24'
+          node-version: "24"
 
       - name: Enable Corepack
         run: corepack enable
@@ -30,8 +30,12 @@ jobs:
 
       - name: Prepare package version
         run: |
-          ./scripts/setPackageVersion.cjs packages/core
+          node ./scripts/setPackageVersion.cjs packages/core
           cat packages/core/package.json | grep version
+
+      - name: Copy files
+        run: |
+          node ./scripts/copyFiles.cjs
 
       - name: Publish package to NPM
         run: |
