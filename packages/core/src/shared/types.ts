@@ -10,4 +10,4 @@ export type OutputType =
   | 'vector_terrain'
   | 'vector_tileset'
   | 'image'
-  | 'splats'
+  | 'splat_model'
