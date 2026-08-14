@@ -288,6 +288,7 @@ export class UploadAPI {
       onChange,
       onError,
       autoUpload = true,
+      projectID,
     } = config
 
     let response: AxiosResponse<InitUploadResponse> | null = null
@@ -297,6 +298,7 @@ export class UploadAPI {
         name: file.name,
         size: file.size,
         type: outputType,
+        projectID,
       })
     } catch (error: unknown) {
       UploadAPI.reportError(error, onError, null)

@@ -11,8 +11,8 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const { name, size, type } = await request.json()
-  const data = await initUpload(name, size, serviceToken, type)
+  const { name, size, type, projectID } = await request.json()
+  const data = await initUpload(name, size, serviceToken, type, projectID)
 
   return NextResponse.json(data, { status: data.status })
 }

@@ -18,6 +18,7 @@ export type ApiConfig = {
   onChange: ChangeCallback
   onError: ErrorCallback
   autoUpload?: boolean
+  projectID?: string
 }
 
 export type UploadConfig = {
