@@ -18,6 +18,7 @@ export type ApiConfig = {
   onChange: ChangeCallback
   onError: ErrorCallback
   autoUpload?: boolean
+  /** @experimental Projects is a experimental feature, not rolled out yet */
   projectID?: string
 }
 
