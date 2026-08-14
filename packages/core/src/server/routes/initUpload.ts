@@ -8,6 +8,7 @@ export const initUpload = async (
   size: number,
   serviceToken: string,
   type: OutputType | null,
+  projectID?: string,
 ) => {
   const output = type ? { type } : undefined
 
@@ -24,6 +25,7 @@ export const initUpload = async (
         size,
         supported_upload_types: ['s3_multipart'],
         output,
+        project_id: projectID,
       },
     })
   })

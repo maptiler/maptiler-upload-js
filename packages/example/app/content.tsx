@@ -34,6 +34,7 @@ export const Content = () => {
         initializeURI: datasetID ? `/api/${datasetID}/ingest` : '/api/ingest',
         getProcessURI: (id) => `/api/ingest/${id}/process`,
         getCancelURI: (id) => `/api/ingest/${id}/cancel`,
+        // projectID: 'PROJECT_ID', // Optional: specify a project ID (not publicly available yet)
       }
 
       // The UploadAPI class is a wrapper around the upload process.
