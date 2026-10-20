@@ -64,6 +64,25 @@ import {
 } from "@maptiler/upload-js";
 ```
 
+There are also helpers for automatically georeferencing an uploaded image dataset:
+
+```ts
+import {
+  startAutoGeoreference,
+  getAutoGeoreference,
+  cancelAutoGeoreference,
+} from "@maptiler/upload-js";
+
+// Pass a location, or omit it to read the location from the image EXIF data.
+await startAutoGeoreference(datasetID, serviceToken, { lat: 50.08, lon: 14.42 });
+
+// Poll with the returned task `id` until `state` is "completed", "canceled" or "failed".
+// The georeferenced dataset is then available as `output_document_id`.
+await getAutoGeoreference(taskID, serviceToken);
+
+await cancelAutoGeoreference(taskID, serviceToken);
+```
+
 All functions require `serviceToken` – the MapTiler service token is a private key used to authenticate your
 application with MapTiler services. This token grants access to your MapTiler account and allows your server to
 perform actions such as uploading files, managing datasets, and more.

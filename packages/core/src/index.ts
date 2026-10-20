@@ -1,9 +1,12 @@
 export * from './client'
 export * from './client/enums'
+export * from './server/routes/cancelAutoGeoreference'
 export * from './server/routes/cancelUpload'
+export * from './server/routes/getAutoGeoreference'
 export * from './server/routes/initUpload'
 export * from './server/routes/processUpload'
 export * from './server/routes/replaceUpload'
+export * from './server/routes/startAutoGeoreference'
 
 export type * from './client/types'
 export type * from './shared/types'
