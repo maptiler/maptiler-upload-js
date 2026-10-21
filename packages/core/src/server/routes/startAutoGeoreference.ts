@@ -4,7 +4,7 @@ import { fetchWithErrorHandling } from '@upload/server/helpers/fetchWithErrorHan
 import type { Location } from '@upload/shared/types'
 
 export const startAutoGeoreference = async (
-  datasetID: string,
+  imageID: string,
   serviceToken: string,
   location?: Location,
 ) => {
@@ -14,7 +14,7 @@ export const startAutoGeoreference = async (
   return fetchWithErrorHandling(() => {
     return axios({
       baseURL: DATASETS_SERVICE_URI,
-      url: `/${datasetID}/auto_georeference`,
+      url: `/${imageID}/auto_georeference`,
       method: 'POST',
       headers: {
         Authorization: `Token ${serviceToken}`,
