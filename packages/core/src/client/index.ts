@@ -53,7 +53,8 @@ export class UploadAPI {
       // An index into the Blob indicating the first byte.
       const start = config.partSize * index
 
-      // An index into the Blob indicating the last byte.
+      // An index into the Blob indicating the first byte NOT included
+      // in this part (exclusive end, as expected by Blob.slice).
       let end = start + config.partSize
       end = end > config.file.size ? config.file.size : end
 
@@ -186,7 +187,7 @@ export class UploadAPI {
     return this.handleFetchError(async () => {
       const response = await axios.put(
         part.url,
-        UploadAPI.sliceFile(this.file, part.start, part.end + 1),
+        UploadAPI.sliceFile(this.file, part.start, part.end),
         {
           headers: {
             'Content-Type': '',
