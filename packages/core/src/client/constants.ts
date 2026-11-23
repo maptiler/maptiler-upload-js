@@ -1,0 +1,3 @@
+export const MAX_PART_UPLOAD_ATTEMPTS = 7
+
+export const PART_UPLOAD_RETRY_DELAY = 1000
