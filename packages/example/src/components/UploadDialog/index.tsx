@@ -15,6 +15,8 @@ import type { Props } from './types'
 export const UploadDialog = ({ onConfirm, onClose }: Props) => {
   const [outputType, setOutputType] = useState<OutputType | null>(null)
   const [datasetID, setDatasetID] = useState<string>('')
+  const [projectID, setProjectID] = useState<string>('')
+  const isReplacing = datasetID.length > 0
 
   const onTypeChange = (
     event: SyntheticEvent | null,
@@ -24,7 +26,11 @@ export const UploadDialog = ({ onConfirm, onClose }: Props) => {
   }
 
   const onSubmit = () => {
-    onConfirm(outputType, datasetID.length ? datasetID : null)
+    onConfirm(
+      outputType,
+      datasetID.length ? datasetID : null,
+      projectID.length ? projectID : null,
+    )
   }
 
   return (
@@ -72,6 +78,17 @@ export const UploadDialog = ({ onConfirm, onClose }: Props) => {
         <Input
           onChange={(event) => setDatasetID(event.target.value)}
           value={datasetID}
+          sx={{ mb: 1 }}
+        />
+        <Typography textColor="text.tertiary" sx={{ fontSize: '12px', mb: 1 }}>
+          {isReplacing
+            ? 'Project cannot be set when replacing an existing dataset. (Beta)'
+            : 'Optionally enter the ID of the project the upload should be added to. (Beta)'}
+        </Typography>
+        <Input
+          onChange={(event) => setProjectID(event.target.value)}
+          value={projectID}
+          disabled={isReplacing}
         />
         <Box
           sx={{

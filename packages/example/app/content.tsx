@@ -20,6 +20,7 @@ export const Content = () => {
       file: File,
       outputType: OutputType | null,
       datasetID: string | null,
+      projectID: string | null,
     ) => {
       // Callback which will be called on each update.
       const onChange = (api: UploadAPI) => {
@@ -34,7 +35,8 @@ export const Content = () => {
         initializeURI: datasetID ? `/api/${datasetID}/ingest` : '/api/ingest',
         getProcessURI: (id) => `/api/ingest/${id}/process`,
         getCancelURI: (id) => `/api/ingest/${id}/cancel`,
-        // projectID: 'PROJECT_ID', // Optional: specify a project ID (not publicly available yet)
+        // Optional (Beta): ID of the project the uploaded dataset is added to.
+        projectID: projectID ?? undefined,
       }
 
       // The UploadAPI class is a wrapper around the upload process.
@@ -62,8 +64,9 @@ export const Content = () => {
   const onConfirm = (
     outputType: OutputType | null,
     datasetID: string | null,
+    projectID: string | null,
   ) => {
-    files.forEach((file) => addFile(file, outputType, datasetID))
+    files.forEach((file) => addFile(file, outputType, datasetID, projectID))
     setIsOpen(false)
     setIsLoading(true)
   }
