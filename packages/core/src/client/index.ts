@@ -1,4 +1,5 @@
-import axios, { HttpStatusCode, isAxiosError } from 'axios'
+import axios, { HttpStatusCode, isAxiosError, isCancel } from 'axios'
+import { MAX_PART_UPLOAD_ATTEMPTS, PART_UPLOAD_RETRY_DELAY } from './constants'
 import { Status } from './enums'
 import type { ProcessPayload } from '@upload/shared/types'
 import type { AxiosProgressEvent, AxiosResponse } from 'axios'
@@ -184,7 +185,7 @@ export class UploadAPI {
     part: InternalPart,
     attempt = 1,
   ): Promise<string | void> {
-    return this.handleFetchError(async () => {
+    try {
       const response = await axios.put(
         part.url,
         UploadAPI.sliceFile(this.file, part.start, part.end),
@@ -198,27 +199,6 @@ export class UploadAPI {
         },
       )
 
-      if (response.status !== 200) {
-        if (attempt < 7) {
-          // Exponential delay starting from 1 second.
-          const delay = 1000 * 2 ** (attempt - 1)
-
-          // Wait...
-          await new Promise((resolve) => setTimeout(resolve, delay))
-
-          // ...and try upload again.
-          return this.uploadPart(part, attempt + 1)
-        }
-
-        // Report a problem after all attempts.
-        this.reportUnsuccessfulResponse(response)
-
-        this.status = Status.Failed
-        this.onChange(this)
-
-        return
-      }
-
       // All header names are lower cased.
       // https://axios-http.com/docs/res_schema
       const ETag: string = response.headers['etag']
@@ -229,7 +209,31 @@ export class UploadAPI {
       this.uploaded += part.end - part.start
 
       return parsedETag
-    })
+    } catch (error: unknown) {
+      if (
+        attempt < MAX_PART_UPLOAD_ATTEMPTS &&
+        UploadAPI.isRetryableError(error)
+      ) {
+        // Exponential delay starting from 1 second.
+        const delay = PART_UPLOAD_RETRY_DELAY * 2 ** (attempt - 1)
+
+        // Wait...
+        await new Promise((resolve) => setTimeout(resolve, delay))
+
+        if (this.status === Status.Canceled) {
+          return
+        }
+
+        // ...and try upload again.
+        return this.uploadPart(part, attempt + 1)
+      }
+
+      // Report a problem after all attempts.
+      UploadAPI.reportError(error, this.onError, this)
+
+      this.status = Status.Failed
+      this.onChange(this)
+    }
   }
 
   private onUploadProgress(event: ProgressEvent): void {
@@ -327,6 +331,17 @@ export class UploadAPI {
     }
 
     return new UploadAPI(uploadConfig, onChange, onError)
+  }
+
+  private static isRetryableError(error: unknown): boolean {
+    if (isCancel(error) || !isAxiosError(error)) {
+      return false
+    }
+
+    return (
+      !error.response ||
+      error.response.status >= HttpStatusCode.InternalServerError
+    )
   }
 
   private static sliceFile(file: File, start: number, end: number): Blob {
