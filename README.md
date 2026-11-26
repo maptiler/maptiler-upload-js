@@ -116,6 +116,9 @@ const api = await UploadAPI.initialize({
   initializeURI: datasetID ? `/api/${datasetID}/ingest` : "/api/ingest",
   getProcessURI: (id) => `/api/ingest/${id}/process`,
   getCancelURI: (id) => `/api/ingest/${id}/cancel`,
+  // Optional (Beta): ID of the project the uploaded dataset is added to.
+  // Ignored when replacing an existing dataset.
+  projectID,
   // Auto upload, default = true. Upload will start immediately.
   autoUpload: false,
 });

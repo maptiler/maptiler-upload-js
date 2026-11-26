@@ -18,7 +18,7 @@ export type ApiConfig = {
   onChange: ChangeCallback
   onError: ErrorCallback
   autoUpload?: boolean
-  /** @experimental Projects is a experimental feature, not rolled out yet */
+  /** Optional ID of the project the uploaded dataset is added to (Beta). Ignored when replacing a dataset. */
   projectID?: string
 }
 
